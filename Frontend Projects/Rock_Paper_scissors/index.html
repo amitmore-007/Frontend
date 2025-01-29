@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissor Game</title>
+   <link rel="stylesheet" href="index.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+   <!-- <script src="index.js"></script> -->
+</head>
+<body>
+  
+
+<div class="container">
+    <div class="scores">
+        <p>Computer :
+            <span id="computer_score">0</span>
+        </p>
+        <p>
+            You :
+            <span id="user_score">0</span>
+        </p>
+    </div>
+    <div class="weapons">
+        <button>
+            <i class="far fa-hand-rock"></i>
+        </button>
+        <button>
+            <i class="far fa-hand-paper"></i>
+        </button>
+        <button>
+            <i class="far fa-hand-scissors"></i>
+        </button>
+    </div>
+    <div class="details">
+        <p id="user_choice"></p>
+        <p id="comp_choice"></p>
+        <p id="result"></p>
+    </div>
+</div>
+
+<script>
+    
+    let [computer_score, user_score] = [0, 0];
+    let result_ref = document.getElementById("result");
+    let choices_object = {
+        'rock': {
+            'rock': 'draw',
+            'scissor': 'win',
+            'paper': 'lose'
+        },
+        'scissor': {
+            'rock': 'lose',
+            'scissor': 'draw',
+            'paper': 'win'
+        },
+        'paper': {
+            'rock': 'win',
+            'scissor': 'lose',
+            'paper': 'draw'
+        }
+    };
+
+    function checker(input) {
+        var choices = ["rock", "paper", "scissor"];
+        var num = Math.floor(Math.random() * 3);
+
+        document.getElementById("comp_choice").innerHTML =
+            `Computer chose <span> ${choices[num].toUpperCase()} </span>`;
+
+        document.getElementById("user_choice").innerHTML =
+            `You chose <span> ${input.toUpperCase()} </span>`;
+
+        let computer_choice = choices[num];
+
+        switch (choices_object[input][computer_choice]) {
+            case 'win':
+                result_ref.style.cssText = "background-color: #cefdce; color: #689f38";
+                result_ref.innerHTML = "YOU WIN";
+                user_score++;
+                break;
+            case 'lose':
+                result_ref.style.cssText = "background-color: #ffdde0; color: #d32f2f";
+                result_ref.innerHTML = "YOU LOSE";
+                computer_score++;
+                break;
+            default:
+                result_ref.style.cssText = "background-color: #e5e5e5; color: #808080";
+                result_ref.innerHTML = "DRAW";
+                break;
+        }
+
+        document.getElementById("computer_score").innerHTML = computer_score;
+        document.getElementById("user_score").innerHTML = user_score;
+    }
+
+    // Add event listeners to buttons
+    let buttons = document.querySelectorAll(".weapons button");
+    let options = ["rock", "paper", "scissor"];
+
+    buttons.forEach((button, index) => {
+        button.addEventListener("click", () => {
+            checker(options[index]);
+        });
+    });
+
+
+</script>
+
+    
+</body>
+</html>
